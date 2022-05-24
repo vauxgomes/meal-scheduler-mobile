@@ -9,10 +9,12 @@ export const FS_MD = 16;
 export const FS_LG = 18;
 export const FS_XL = 24;
 export const FS_XXL = 30;
+export const FS_XXXL = 72;
 
 // Background Colors
 export const BG = "#1f1f21";
 export const BG_SECONDARY = "#007042"; // #11B882
+export const BG_WARNING = "#e83900";
 
 // Colors
 export const PRIMARY = "#007042";
@@ -25,6 +27,7 @@ export const GRAY_LINE = "#eaedf3";
 
 export const WHITE = "#ffffff";
 export const BLACK = "#1f1f21";
+export const BLACK_LIGHT = "#454344";
 
 // Spacing
 export const SPACING_XS = 4;
