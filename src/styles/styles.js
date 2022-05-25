@@ -12,8 +12,8 @@ export const FS_XXL = 30;
 export const FS_XXXL = 72;
 
 // Background Colors
-export const BG = "#1f1f21";
-export const BG_SECONDARY = "#007042"; // #11B882
+export const BG = "#007042";
+export const BG_SECONDARY = "#1f1f21"; // #11B882
 export const BG_WARNING = "#e83900";
 
 // Colors
