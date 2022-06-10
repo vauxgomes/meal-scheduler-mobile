@@ -1,62 +1,65 @@
-import { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, FlatList } from "react-native";
-
-import Header from "../../components/Header";
-import ScheduleCard from "../../components/ScheduleCard";
-
-import api from "../../services/api";
-import { BG, BG_SECONDARY, SPACING_LG } from "../../styles/styles";
+import { useState, useEffect } from 'react'
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native'
+import MealCard from '../../components/MealCard'
+import TopBar from '../../components/TopBar'
+import { card, color, font, shadow, space } from '../../style/styles'
 
 export default function Main({ navigation, route }) {
-  const [schedules, setSchedules] = useState([]);
-
-  useEffect(() => {
-    api.setToken(route.params.token);
-    api.getWeek().then((response) => {
-      let date = null;
-      const schedules = [];
-
-      response.forEach((schedule) => {
-        if (schedule.date === date) {
-          schedules[schedules.length - 1].meals.push(schedule);
-        } else {
-          date = schedule.date;
-
-          schedules.push({
-            id: schedules.length,
-            date: schedule.date,
-            meals: [schedule],
-          });
-        }
-      });
-
-      setSchedules(schedules);
-    });
-  });
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} />
+      <View style={styles.main}>
+        <TopBar title={'Sistema de merendas do IFCE Jaguaribe'} />
 
-      <FlatList
-        style={styles.body}
-        data={schedules}
-        renderItem={({ item }) => <ScheduleCard schedule={item} />}
-        keyExtractor={(item) => item.id}
-      />
+        <ScrollView
+          style={{
+            padding: space.lg,
+            paddingBottom: space.xl,
+          }}
+        >
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+          <MealCard />
+        </ScrollView>
+      </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
+
     flex: 1,
-    backgroundColor: BG,
-    position: "relative",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: color.background,
   },
 
-  body: {
-    paddingBottom: SPACING_LG,
-    backgroundColor: BG_SECONDARY,
+  main: {
+    flex: 1,
+    justifyContent: 'space-between',
+    width: '100%',
   },
-});
+})

@@ -1,179 +1,91 @@
-// https://www.youtube.com/watch?v=LtbuOgoQJAg
-
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 import {
-  View,
-  Text,
-  Image,
   SafeAreaView,
-  TouchableOpacity,
+  View,
   StyleSheet,
+  Text,
   TextInput,
-} from "react-native";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LinearGradient } from "expo-linear-gradient";
-
-import {
-  BG,
-  BG_SECONDARY,
-  FS_LG,
-  GRAY_MEDIUM,
-  SPACING_LG,
-  SPACING_MD,
-  SPACING_XG,
-  SPACING_XS,
-  WHITE,
-} from "../../styles/styles";
-
-import api from "../../services/api";
+  TouchableOpacity,
+} from 'react-native'
+import { button, color, font, space } from '../../style/styles'
 
 export default function Login({ navigation, route }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const storeData = async () => {
-    try {
-      await AsyncStorage.setItem("@username", username);
-      await AsyncStorage.setItem("@password", password);
-    } catch (e) {
-      // saving error
-    }
-  };
-
-  const loadData = async () => {
-    try {
-      const username = await AsyncStorage.getItem("@username");
-      const password = await AsyncStorage.getItem("@password");
-
-      if (username && password) {
-        setUsername(username);
-        setPassword(password);
-
-        storeData();
-        handleLogin(username, password);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-
-  useEffect(() => {
-    if (!username || !password) {
-      loadData();
-    }
-  }, []);
-
-  const handleLogin = (username, password) => {
-    api
-      .getToken(username, password)
-      .then((response) => {
-        try {
-          if (response.success) {
-            storeData();
-            navigation.navigate("home", { token: response.token });
-            api.setToken(response.token);
-          }
-        } catch (err) {
-          alert("Não foi possível conectar-se com o Servidor.");
-        }
-      })
-      .catch((err) => {
-        alert("Login ou senhar inconreta.");
-      });
-  };
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient colors={[BG, BG_SECONDARY]} style={styles.background} />
+      <View style={styles.main}>
+        <View style={styles.form}>
+          <Text style={styles.title}>Login</Text>
 
-      <Image
-        style={styles.img}
-        source={require("../../../assets/bolt-circle-big.png")}
-      />
+          <Text style={styles.label}>Matrícula</Text>
+          <TextInput
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+          />
 
-      <View>
-        <Text style={styles.label}>Matrícula</Text>
-        <TextInput
-          style={styles.input}
-          value={username}
-          onChangeText={setUsername}
-        />
+          <Text style={styles.label}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
+        </View>
 
-        <Text style={styles.label}>Senha</Text>
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={true}
-        />
+        <View>
+          <TouchableOpacity style={button.body}>
+            <Text style={button.text}>Entrar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => handleLogin(username, password)}
-      >
-        <Text style={styles.btnText}>Enviar</Text>
-      </TouchableOpacity>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: WHITE,
-    alignItems: "center",
-    justifyContent: "center",
-    // padding: SPACING_MD,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: color.background,
   },
 
-  background: {
+  main: {
     flex: 1,
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: "100%",
+    justifyContent: 'space-between',
+
+    paddingVertical: space.xl,
+    minWidth: '75%',
   },
 
-  img: {
-    width: 200,
-    height: 200,
-    marginBottom: SPACING_XG,
+  form: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+
+  title: {
+    fontSize: font.size.xxxl,
+    marginBottom: space.xxl,
   },
 
   label: {
-    color: GRAY_MEDIUM,
-    fontWeight: "bold",
-
-    marginBottom: SPACING_XS,
-    zIndex: 100,
+    color: color.text,
+    marginBottom: space.sm,
   },
 
   input: {
-    width: 280,
-    // height: 40,
-    marginBottom: SPACING_MD,
-    borderWidth: 2,
-    borderRadius: 6,
-    color: WHITE,
-    padding: SPACING_MD,
-    fontSize: FS_LG,
-    fontWeight: "600",
-    zIndex: 100,
-  },
+    height: 40,
+    marginBottom: space.md,
 
-  btn: {
-    padding: SPACING_MD,
-    backgroundColor: BG,
-    borderRadius: 6,
-    width: 150,
-  },
+    color: color.primary,
 
-  btnText: {
-    color: WHITE,
-    fontWeight: "bold",
-    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+
+    borderBottomWidth: 1,
+    borderBottomColor: color.secondary,
   },
-});
+})
