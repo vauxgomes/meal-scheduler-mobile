@@ -9,20 +9,16 @@ import {
 } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
+import CameraNotAllowed from './CameraNotAllowed'
+import ScheduleCheckin from '../ScheduleCheckin'
+
 import { color, font, shadow, space } from '../../style/styles'
 import api from '../../services/api'
-import CameraNotAllowed from './CameraNotAllowed'
-import TopBar from '../../components/TopBar'
-import CountDownTimer from './CountDownTimer'
 
 export default function Scanner({ navigation, route }) {
   const [hasPermission, setHasPermission] = useState(false)
   const [scanned, setScanned] = useState(false)
-  const [data, setData] = useState('')
-
-  const [hasSent, setHasSent] = useState(false)
-  const [hasExpired, setHasExpired] = useState(false)
-  const [response, setResponse] = useState('')
+  const [schedule, setSchedule] = useState(undefined)
 
   const askForCameraPermission = () => {
     const ask = async () => {
@@ -38,20 +34,15 @@ export default function Scanner({ navigation, route }) {
   }, [])
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true)
-    setData(data)
-
-    // api
-    //   .token(route.params.token)
-    //   .postOrder(data)
-    //   .then((response) => {
-    //     if (!response) {
-    //       alert(response)
-    //     }
-
-    //     alert(JSON.stringify(response))
-    //     setResponse(response)
-    //   })
+    api
+      .token(route.params.token)
+      .getSchedule(data)
+      .then((response) => {
+        if (response) {
+          setSchedule(response)
+          setScanned(true)
+        }
+      })
   }
 
   /** Camera not allowed */
@@ -72,12 +63,11 @@ export default function Scanner({ navigation, route }) {
     )
 
   return (
-    <View>
-      <CountDownTimer
-        timeInSeconds={hasExpired ? 0 : 45}
-        onEndingTime={() => setHasExpired(true)}
-      />
-    </View>
+    <ScheduleCheckin
+      navigation={navigation}
+      route={route}
+      schedule={schedule}
+    />
   )
 }
 

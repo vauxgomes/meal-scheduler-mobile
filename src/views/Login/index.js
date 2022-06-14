@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import {
   SafeAreaView,
@@ -62,7 +62,10 @@ export default function Login({ navigation, route }) {
         </View>
 
         <View>
-          <TouchableOpacity style={button.body} onPress={handleLogin}>
+          <TouchableOpacity
+            style={[button.container, button.primary]}
+            onPress={handleLogin}
+          >
             <Text style={button.text}>Entrar</Text>
           </TouchableOpacity>
         </View>

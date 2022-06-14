@@ -6,7 +6,9 @@ import {
   FlatList,
   Text,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 
 import DayCard from '../../components/DayCard'
 import TopBar from '../../components/TopBar'
@@ -24,7 +26,7 @@ export default function Main({ navigation, route }) {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    wait(2000).then(() => setRefreshing(false))
+    wait(1000).then(() => setRefreshing(false))
 
     loadData()
   }, [])
@@ -66,11 +68,7 @@ export default function Main({ navigation, route }) {
   if (schedules.length == 0) {
     return (
       <View style={styles.container}>
-        <TopBar
-          onPress={() => navigation.navigate('Scanner', route.params)}
-          icon={'qrcode'}
-          title={'Sistema de merendas do IFCE Jaguaribe'}
-        />
+        <TopBar />
 
         {/* Refresh View */}
         <ScrollView
@@ -91,31 +89,35 @@ export default function Main({ navigation, route }) {
   // Some data
   return (
     <View style={styles.container}>
-      <TopBar
-        onPress={() => navigation.navigate('Scanner', route.params)}
-        icon={'qrcode'}
-        title={'Sistema de merendas do IFCE Jaguaribe'}
-      />
+      <TopBar />
 
       {/* Refresh View */}
-      <ScrollView
+      <FlatList
+        style={{ flex: 1 }}
+        data={schedules}
+        renderItem={({ item: day }) => <DayCard day={day} route={route} />}
+        keyExtractor={(item, index) => index}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-      >
-        <FlatList
-          style={{ padding: space.lg }}
-          data={schedules}
-          renderItem={({ item: day }) => <DayCard day={day} />}
-          keyExtractor={(item, index) => index}
-        />
-      </ScrollView>
+      />
+
+      <View style={stylesScan.container}>
+        <TouchableOpacity
+          style={stylesScan.btn}
+          onPress={() => navigation.navigate('Scanner', route.params)}
+        >
+          <FontAwesome name={'qrcode'} size={26} color="white" />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
+
     flex: 1,
     justifyContent: 'space-between',
 
@@ -123,13 +125,33 @@ const styles = StyleSheet.create({
     backgroundColor: color.background,
   },
 
-  reload: {
-    backgroundColor: 'red',
-  },
-
   empty: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+})
+
+const stylesScan = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    bottom: space.sm,
+
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    width: '100%',
+  },
+
+  btn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    padding: space.md,
+    width: 60,
+
+    backgroundColor: '#000',
+    borderRadius: 50,
   },
 })

@@ -18,6 +18,7 @@ export const color = {
   background: '#F4F5F9',
   primary: 'green',
   secondary: '#736C7C',
+  warning: 'red',
   text: '#191629',
   line: '#e5eaef',
   heart: '#fd4a75',
@@ -35,10 +36,10 @@ export const space = {
 
 // Button
 export const button = {
-  body: {
+  container: {
     width: '100%',
     padding: space.md,
-    backgroundColor: color.primary,
+    backgroundColor: '#000',
     borderRadius: 12,
   },
 
@@ -47,13 +48,17 @@ export const button = {
     fontWeight: '600',
     color: color.white,
   },
+
+  primary: {
+    backgroundColor: color.primary,
+  },
 }
 
 // Card
 export const card = {
   body: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    // alignItems: 'center',
 
     padding: space.md,
     backgroundColor: color.white,

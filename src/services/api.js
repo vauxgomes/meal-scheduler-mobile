@@ -56,15 +56,41 @@ class API {
     }
   }
 
-  /** Orders */
+  /** Schedule */
 
-  async postOrder(schedule_id) {
+  async getSchedule(schedule_id) {
     try {
-      const response = await this.api.post('/orders', { schedule_id }, this.config)
+      const response = await this.api.get(
+        `/schedules/${schedule_id}`,
+        this.config
+      )
+
       return response.data
     } catch (error) {
       return null
     }
+  }
+
+  /** Orders */
+
+  async postOrder(schedule_id) {
+    const response = await this.api.post(
+      '/orders',
+      { schedule_id },
+      this.config
+    )
+
+    return response.data
+  }
+
+  async putLike(order_id, like) {
+    const response = await this.api.put(
+      `/orders/${order_id}`,
+      { like },
+      this.config
+    )
+
+    return response.data
   }
 }
 

@@ -1,16 +1,16 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
-
 import { color, font, space } from '../../style/styles'
 
-export default function TopBar({ title, icon, onPress }) {
+export default function TopBar() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.btn} onPress={onPress}>
-        <FontAwesome name={icon} size={26} color="white" />
-      </TouchableOpacity>
-
-      <Text style={styles.title}>{title}</Text>
+      <Image
+        style={styles.img}
+        source={require('../../../assets/imgs/f.png')}
+      />
+      <Text style={styles.title}>
+        Sistema de merendas do IFCE campus Jaguaribe
+      </Text>
     </View>
   )
 }
@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
     paddingVertical: space.md,
 
     backgroundColor: color.background,
-    shadowColor: '#000',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: color.line,
 
     shadowOffset: {
       width: 0,
@@ -38,27 +40,10 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 
-  btn: {
-    paddingVertical: space.md - 3,
-    paddingHorizontal: space.md,
-    marginRight: space.md,
-
-    backgroundColor: color.primary,
-    borderRadius: '50%',
-  },
-
-  qr: {
-    height: 32,
-    width: 32,
-  },
-
-  slice: {
+  img: {
     width: 30,
-    height: 4,
-    marginVertical: 2,
-
-    backgroundColor: color.primary,
-    borderRadius: 4,
+    height: 37,
+    marginEnd: space.md,
   },
 
   title: {
