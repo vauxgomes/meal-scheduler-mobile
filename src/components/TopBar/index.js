@@ -1,14 +1,13 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
-import { card, color, font, shadow, space } from '../../style/styles'
+import { FontAwesome } from '@expo/vector-icons'
 
-export default function TopBar({ title }) {
+import { color, font, space } from '../../style/styles'
+
+export default function TopBar({ title, icon, onPress }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.btn}>
-        <Image
-          style={styles.qr}
-          source={require('../../../assets/icons/qr.png')}
-        />
+      <TouchableOpacity style={styles.btn} onPress={onPress}>
+        <FontAwesome name={icon} size={26} color="white" />
       </TouchableOpacity>
 
       <Text style={styles.title}>{title}</Text>
@@ -23,10 +22,25 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: space.lg,
     paddingVertical: space.md,
+
+    backgroundColor: color.background,
+    shadowColor: '#000',
+
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+    zIndex: 2,
   },
 
   btn: {
-    padding: 10,
+    paddingVertical: space.md - 3,
+    paddingHorizontal: space.md,
     marginRight: space.md,
 
     backgroundColor: color.primary,

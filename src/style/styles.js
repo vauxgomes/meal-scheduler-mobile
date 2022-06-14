@@ -2,6 +2,7 @@
 export const font = {
   family: 'Montserrat',
   size: {
+    xs: 10,
     sm: 14,
     md: 16,
     lg: 18,
@@ -18,6 +19,8 @@ export const color = {
   primary: 'green',
   secondary: '#736C7C',
   text: '#191629',
+  line: '#e5eaef',
+  heart: '#fd4a75',
 }
 
 // Spacing
@@ -36,7 +39,7 @@ export const button = {
     width: '100%',
     padding: space.md,
     backgroundColor: color.primary,
-    borderRadius: 50,
+    borderRadius: 12,
   },
 
   text: {
@@ -54,7 +57,7 @@ export const card = {
 
     padding: space.md,
     backgroundColor: color.white,
-    borderRadius: 20,
+    borderRadius: 8,
   },
 }
 

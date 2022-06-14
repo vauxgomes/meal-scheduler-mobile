@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+
 import {
   SafeAreaView,
   View,
@@ -6,19 +7,44 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native'
+
 import { button, color, font, space } from '../../style/styles'
+import api from '../../services/api'
 
 export default function Login({ navigation, route }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('student')
+  const [password, setPassword] = useState('student')
+
+  const handleLogin = () => {
+    try {
+      api.login(username, password).then((response) => {
+        if (response && response.success) {
+          navigation.navigate('Home', { token: response.token })
+        }
+      })
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
-        <View style={styles.form}>
-          <Text style={styles.title}>Login</Text>
+        <View>
+          <Image
+            style={styles.img}
+            source={require('../../../assets/imgs/f.png')}
+          />
 
+          <Text style={styles.title}>Jandaya</Text>
+          <Text style={styles.subtitle}>
+            Sistema de merendas do IFCE Jaguaribe
+          </Text>
+        </View>
+
+        <View style={styles.form}>
           <Text style={styles.label}>Matrícula</Text>
           <TextInput
             style={styles.input}
@@ -36,7 +62,7 @@ export default function Login({ navigation, route }) {
         </View>
 
         <View>
-          <TouchableOpacity style={button.body}>
+          <TouchableOpacity style={button.body} onPress={handleLogin}>
             <Text style={button.text}>Entrar</Text>
           </TouchableOpacity>
         </View>
@@ -61,14 +87,27 @@ const styles = StyleSheet.create({
     minWidth: '75%',
   },
 
-  form: {
-    flex: 1,
-    justifyContent: 'center',
+  img: {
+    width: 30,
+    height: 37,
+    marginTop: space.md,
+    marginBottom: space.lg,
   },
 
   title: {
+    color: color.primary,
     fontSize: font.size.xxxl,
-    marginBottom: space.xxl,
+    // marginBottom: space.xxl,
+  },
+
+  subtitle: {
+    color: color.secondary,
+    fontSize: font.size.sm,
+  },
+
+  form: {
+    flex: 1,
+    justifyContent: 'center',
   },
 
   label: {
