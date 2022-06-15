@@ -20,6 +20,7 @@ export default function Login({ navigation, route }) {
   const handleLogin = () => {
     try {
       api.login(username, password).then((response) => {
+        alert(response)
         if (response && response.success) {
           navigation.navigate('Home', { token: response.token })
         }
