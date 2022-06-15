@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-start',
     padding: space.md,
-    paddingBottom: 0,
+    paddingVertical: space.sm,
   },
 
   day: {

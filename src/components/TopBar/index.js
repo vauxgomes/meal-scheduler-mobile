@@ -1,16 +1,22 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
+
 import { color, font, space } from '../../style/styles'
 
-export default function TopBar() {
+export default function TopBar({ navigation, route }) {
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.img}
-        source={require('../../../assets/imgs/f.png')}
-      />
-      <Text style={styles.title}>
-        Sistema de merendas do IFCE campus Jaguaribe
-      </Text>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => navigation.navigate('Orders', route.params)}
+      >
+        <FontAwesome name="bars" size={24} color="black" />
+      </TouchableOpacity>
+
+      <View>
+        <Text style={styles.title}>Sistema de merendas do IFCE</Text>
+        <Text style={styles.subtitle}>Campus Jaguaribe</Text>
+      </View>
     </View>
   )
 }
@@ -40,14 +46,17 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 
-  img: {
-    width: 30,
-    height: 37,
+  btn: {
+    padding: space.xs,
     marginEnd: space.md,
   },
 
   title: {
-    width: '70%',
     fontSize: font.size.lg,
+  },
+
+  subtitle: {
+    color: color.secondary,
+    fontSize: font.size.md,
   },
 })

@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import Login from './src/views/Login'
 import Main from './src/views/Main'
+import Orders from './src/views/Orders'
 import Scanner from './src/views/Scanner'
 
 import { color } from './src/style/styles'
@@ -26,6 +27,12 @@ export default function App() {
             name="Home"
             options={{ headerShown: false }}
             component={Main}
+          />
+
+          <Stack.Screen
+            name="Orders"
+            options={{ headerShown: false }}
+            component={Orders}
           />
 
           <Stack.Screen

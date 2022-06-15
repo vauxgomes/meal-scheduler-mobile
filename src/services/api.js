@@ -16,7 +16,7 @@ import axios from 'axios'
 class API {
   constructor(token = null) {
     this.api = axios.create({
-      baseURL: process.env.API_URL,
+      baseURL: 'http://10.1.17.178:3333',
     })
 
     this.token(token)
@@ -37,12 +37,8 @@ class API {
   /** Login */
 
   async login(username, password) {
-    try {
-      const response = await this.api.post('/login', { username, password })
-      return response.data
-    } catch (error) {
-      return null
-    }
+    const response = await this.api.post('/login', { username, password })
+    return response.data
   }
 
   /* Week */
@@ -80,6 +76,11 @@ class API {
       this.config
     )
 
+    return response.data
+  }
+
+  async getOrders() {
+    const response = await this.api.get('/orders', this.config)
     return response.data
   }
 

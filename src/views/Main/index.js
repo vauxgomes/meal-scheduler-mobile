@@ -68,7 +68,7 @@ export default function Main({ navigation, route }) {
   if (schedules.length == 0) {
     return (
       <View style={styles.container}>
-        <TopBar />
+        <TopBar navigation={navigation} route={route} />
 
         {/* Refresh View */}
         <ScrollView
@@ -89,11 +89,11 @@ export default function Main({ navigation, route }) {
   // Some data
   return (
     <View style={styles.container}>
-      <TopBar />
+      <TopBar navigation={navigation} route={route} />
 
       {/* Refresh View */}
       <FlatList
-        style={{ flex: 1 }}
+        style={{ flexGrow: 1, paddingTop: space.sm }}
         data={schedules}
         renderItem={({ item: day }) => <DayCard day={day} route={route} />}
         keyExtractor={(item, index) => index}

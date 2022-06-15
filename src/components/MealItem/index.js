@@ -1,38 +1,13 @@
-import { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { color, font, space } from '../../style/styles'
-import { FontAwesome } from '@expo/vector-icons'
-import api from '../../services/api'
 
 export default function MealItem({ meal, route }) {
-  const [like, setLike] = useState(meal.like)
-
-  const handleLike = () => {
-    api
-      .token(route.params.token)
-      .putLike(meal.id, !like)
-      .then((response) => {
-        setLike(!like)
-      })
-      .catch((err) => {
-        alert(err)
-      })
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.meal}>
-        <Text style={styles.description}>{meal.description}</Text>
         <Text style={styles.time}>{meal.time_nice}</Text>
+        <Text style={styles.description}>{meal.description}</Text>
       </View>
-
-      {/* <TouchableOpacity style={styles.like} onPress={handleLike}>
-        <FontAwesome
-          name="heart"
-          size={font.size.xl}
-          color={like ? color.heart : color.secondary}
-        />
-      </TouchableOpacity> */}
     </View>
   )
 }
@@ -60,14 +35,5 @@ const styles = StyleSheet.create({
 
   time: {
     color: color.secondary,
-  },
-
-  like: {
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    width: 40,
-    height: 40,
-    marginLeft: space.sm,
   },
 })

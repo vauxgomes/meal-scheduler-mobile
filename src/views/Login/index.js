@@ -18,16 +18,16 @@ export default function Login({ navigation, route }) {
   const [password, setPassword] = useState('student')
 
   const handleLogin = () => {
-    try {
-      api.login(username, password).then((response) => {
-        alert(response)
+    api
+      .login(username, password)
+      .then((response) => {
         if (response && response.success) {
           navigation.navigate('Home', { token: response.token })
         }
       })
-    } catch (error) {
-      alert(error)
-    }
+      .catch((error) => {
+        alert(`Error: ${error.response.data.message}`)
+      })
   }
 
   return (
