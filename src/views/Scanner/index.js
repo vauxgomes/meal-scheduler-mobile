@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react'
-import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native'
+import { View, SafeAreaView, StyleSheet } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import CameraNotAllowed from './CameraNotAllowed'
 import ScheduleCheckin from '../ScheduleCheckin'
+import TopBar from '../../components/TopBar'
 
 import { color, font, shadow, space } from '../../style/styles'
 import api from '../../services/api'
@@ -49,6 +46,7 @@ export default function Scanner({ navigation, route }) {
   if (!scanned)
     return (
       <SafeAreaView style={styles.container}>
+        <TopBar goBack={true} navigation={navigation} />
         <View style={styles.main}>
           <View style={styles.scanner}></View>
           <BarCodeScanner

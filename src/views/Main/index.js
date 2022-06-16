@@ -64,13 +64,30 @@ export default function Main({ navigation, route }) {
     loadData()
   }, [])
 
-  // Empty Data
-  if (schedules.length == 0) {
-    return (
-      <View style={styles.container}>
-        <TopBar navigation={navigation} route={route} />
+  return (
+    <View style={styles.container}>
+      <TopBar
+        icon="bars"
+        target="Orders"
+        navigation={navigation}
+        route={route}
+      />
 
-        {/* Refresh View */}
+      {/* Schedules View */}
+      {schedules.length > 0 && (
+        <FlatList
+          style={{ flexGrow: 1, paddingTop: space.sm }}
+          data={schedules}
+          renderItem={({ item: day }) => <DayCard day={day} route={route} />}
+          keyExtractor={(item, index) => index}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      )}
+
+      {/* Empty View */}
+      {schedules.length == 0 && (
         <ScrollView
           contentContainerStyle={styles.empty}
           refreshControl={
@@ -82,25 +99,7 @@ export default function Main({ navigation, route }) {
             <Text>Segure e arraste para baixo para recarregar a tela</Text>
           </View>
         </ScrollView>
-      </View>
-    )
-  }
-
-  // Some data
-  return (
-    <View style={styles.container}>
-      <TopBar navigation={navigation} route={route} />
-
-      {/* Refresh View */}
-      <FlatList
-        style={{ flexGrow: 1, paddingTop: space.sm }}
-        data={schedules}
-        renderItem={({ item: day }) => <DayCard day={day} route={route} />}
-        keyExtractor={(item, index) => index}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
+      )}
 
       <View style={stylesScan.container}>
         <TouchableOpacity

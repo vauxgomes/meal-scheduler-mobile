@@ -1,16 +1,33 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
+
+import { FontAwesome, AntDesign } from '@expo/vector-icons'
 
 import { color, font, space } from '../../style/styles'
 
-export default function TopBar({ navigation, route }) {
+export default function TopBar({
+  icon,
+  target,
+  navigation,
+  route,
+  goBack = false,
+}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => navigation.navigate('Orders', route.params)}
+        onPress={() => {
+          if (target) {
+            navigation.navigate(target, route.params)
+          } else if (goBack) {
+            navigation.goBack()
+          }
+        }}
       >
-        <FontAwesome name="bars" size={24} color="black" />
+        {goBack ? (
+          <AntDesign name="arrowleft" size={24} color="black" />
+        ) : (
+          <FontAwesome name={icon} size={24} color="black" />
+        )}
       </TouchableOpacity>
 
       <View>
@@ -47,6 +64,7 @@ const styles = StyleSheet.create({
   },
 
   btn: {
+    width: 29,
     padding: space.xs,
     marginEnd: space.md,
   },

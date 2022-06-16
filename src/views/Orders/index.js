@@ -13,6 +13,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { color, font, space } from '../../style/styles'
 import api from '../../services/api'
 import OrderItem from '../../components/OrderItem'
+import TopBar from '../../components/TopBar'
 
 export default function Orders({ navigation, route }) {
   const [orders, setOrders] = useState([])
@@ -38,28 +39,25 @@ export default function Orders({ navigation, route }) {
   // Some data
   return (
     <View style={styles.container}>
-      <View style={topbar.container}>
-        <TouchableOpacity
-          style={topbar.btn}
-          onPress={() => navigation.goBack()}
-        >
-          <AntDesign name="arrowleft" size={24} color="black" />
-        </TouchableOpacity>
+      <TopBar goBack={true} navigation={navigation} />
 
-        <View>
-          <Text style={topbar.title}>Sistema de merendas do IFCE</Text>
-          <Text style={topbar.subtitle}>Campus Jaguaribe</Text>
+      {orders.length > 0 && (
+        <FlatList
+          style={{ padding: space.lg }}
+          data={orders}
+          renderItem={({ item: order }) => (
+            <OrderItem order={order} token={route.params.token} />
+          )}
+          keyExtractor={(item, index) => index}
+        />
+      )}
+
+      {/* Empty View */}
+      {orders.length == 0 && (
+        <View style={styles.empty}>
+          <Text>Você não consumiu tickets</Text>
         </View>
-      </View>
-
-      <FlatList
-        style={{ padding: space.lg }}
-        data={orders}
-        renderItem={({ item: order }) => (
-          <OrderItem order={order} token={route.params.token} />
-        )}
-        keyExtractor={(item, index) => index}
-      />
+      )}
     </View>
   )
 }
@@ -68,6 +66,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: color.background,
+  },
+
+  empty: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 

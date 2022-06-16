@@ -16,7 +16,7 @@ import axios from 'axios'
 class API {
   constructor(token = null) {
     this.api = axios.create({
-      baseURL: 'http://10.1.17.178:3333',
+      baseURL: 'http://192.168.0.10:3333',
     })
 
     this.token(token)
