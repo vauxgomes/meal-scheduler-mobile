@@ -16,7 +16,7 @@ import axios from 'axios'
 class API {
   constructor(token = null) {
     this.api = axios.create({
-      baseURL: 'http://192.168.0.10:3333',
+      baseURL: 'https://meal-scheduler-backend.herokuapp.com',
     })
 
     this.token(token)
@@ -31,6 +31,11 @@ class API {
       },
     }
 
+    return this
+  }
+
+  host(host) {
+    this.api.defaults.baseURL = host
     return this
   }
 

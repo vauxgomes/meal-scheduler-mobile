@@ -14,8 +14,8 @@ import { button, color, font, space } from '../../style/styles'
 import api from '../../services/api'
 
 export default function Login({ navigation, route }) {
-  const [username, setUsername] = useState('student')
-  const [password, setPassword] = useState('student')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleLogin = () => {
     api
@@ -51,6 +51,7 @@ export default function Login({ navigation, route }) {
             style={styles.input}
             value={username}
             onChangeText={setUsername}
+            placeholder="nome.sobrenome"
           />
 
           <Text style={styles.label}>Senha</Text>
@@ -59,6 +60,7 @@ export default function Login({ navigation, route }) {
             value={password}
             onChangeText={setPassword}
             secureTextEntry={true}
+            placeholder="matrícula"
           />
         </View>
 
