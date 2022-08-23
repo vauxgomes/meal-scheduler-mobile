@@ -8,10 +8,7 @@ export default function DayCard({ day, route }) {
       <View style={[card.body, shadow.sm]}>
         <View style={styles.day}>
           <Text style={styles.name}>
-            {new Date(day.date)
-              .toLocaleDateString('pt-BR', { weekday: 'short' })
-              .replace('.', ' - ')}
-            {new Date(day.date).getDate()}
+            {new Date(day.date).toLocaleDateString('pt-BR')}
           </Text>
         </View>
 

@@ -33,7 +33,7 @@ export default function Login({ navigation, route }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
-        <View>
+        <View style={styles.header}>
           <Image
             style={styles.img}
             source={require('../../../assets/imgs/f.png')}
@@ -91,6 +91,10 @@ const styles = StyleSheet.create({
 
     paddingVertical: space.xl,
     minWidth: '75%',
+  },
+  
+  header: {
+    marginBottom: space.lg
   },
 
   img: {

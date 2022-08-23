@@ -44,6 +44,9 @@ export default function Main({ navigation, route }) {
         const schedules = []
 
         response.forEach((schedule) => {
+          console.log(schedule);
+          schedule.description = schedule.description.replace(/(\r\n|\n|\r)/gm, " ")
+
           if (schedule.date === date) {
             schedules[schedules.length - 1].meals.push(schedule)
           } else {
